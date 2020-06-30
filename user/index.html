@@ -1,19 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-cn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="./css/style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="format-detection" content="telephone=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>
+
+        Hani
+
+    </title>
+
+    <link rel="stylesheet" href="css/style.min.css">
+
+
+    <script src="js/adaptive.js"></script>
+    <script>
+        window['adaptive'].desinWidth = 750;
+        window['adaptive'].maxRate = 0.63;
+        window['adaptive'].baseFont = 24;
+        window['adaptive'].init();
+    </script>
+
 </head>
+<body show>
 
-<body>
-  <div class="user-wrap">
-    <div class="user-header"></div>
-  </div>
-  <!-- jq - 引入 -->
-  <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
-  <script src="./js/index.js"></script>
+    <div class="page page-home">
+        <!-- 引入公共组件 - loading -->
+
+        <!-- loading弹窗 -->
+        <div class="modal modal-loading" id="modalLoading">
+            <div class="modal-content">
+                <div class="modal-bg"></div>
+                <div class="modal-body">
+                    <div class="loading-inner"></div>
+                </div>
+            </div>
+        </div>
+        <!-- 引入公共组件 - 页面头部 -->
+        <!-- 公共组件 - 头部 -->
+        <div class="page-header">
+
+        </div>
+        <div class="box"></div>
+    </div>
+
+
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.js"></script>
+
+    <script src="./js/components/index.js"></script>
+
 </body>
-
 </html>
