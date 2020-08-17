@@ -18,7 +18,7 @@
 <meta property="og:description" content="AE 导出 json 动画文件 开发渲染动画首先我们需要动画师输出给我们一个 JSON 动画文件 然后我们的主角 lottie.js 要出场了 我们通过 npm i lottie-web -s 下载 lottie.js 下载完成后 我们就开始使用吧 html 代码块 1234567&lt;!-- 包含动画的dom元素 --&gt;&lt;div id&#x3D;&quot;animation&quot;&gt;&lt;&#x2F;div">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-08-01T13:30:30.000Z">
-<meta property="article:modified_time" content="2020-07-26T07:48:03.650Z">
+<meta property="article:modified_time" content="2020-08-17T12:42:15.814Z">
 <meta property="article:author" content="Hani">
 <meta property="article:tag" content="web前端">
 <meta property="article:tag" content="web前端 - js">
@@ -226,7 +226,7 @@
       <!-- 百度字体平台:http://fontstore.baidu.com/static/editor/index.html -->
       <i class="icon-statistics"></i>
       <span class="post-meta-item-text"> 字数统计:</span>
-      <span class="post-count">465字</span>
+      <span class="post-count">466字</span>
     </span>
   </span>
 
@@ -264,7 +264,7 @@
 <style>
 * {margin: 0;padding: 0;}
 html,body {width: 100%;height: 100%;}
-#animation {width: 100%;height: 100%;background: #666;}
+#animation {position: relative;width: 192px;height: 108px;background: #666;margin-bottom: 20px;}
 </style>
 
 <!-- 包含动画的dom元素 -->
@@ -273,7 +273,7 @@ html,body {width: 100%;height: 100%;}
 <button class="play">播放</button>
 <button class="pause">暂停</button>
 <!-- 引入lottie.js -->
-<script src="https://cdn.bootcdn.net/ajax/libs/lottie-web/5.7.0/lottie.js"></script>
+<script src="http://cdn.bootcdn.net/ajax/libs/lottie-web/5.7.0/lottie.js"></script>
 <script>
 var icon = document.getElementById('animation')
 lottie.loadAnimation({
@@ -281,7 +281,7 @@ lottie.loadAnimation({
   renderer: 'html', //渲染方式，有"html"、"canvas"和"svg"三种
   loop: true, //循环播放
   autoplay: true, //自动播放
-  path: 'https://project.perpower.cn/Hani/03.json' // 动画json的路径
+  path: '../json/03.json' // 动画json的路径
 })
 var stop = document.getElementsByClassName('stop')[0]
 var play = document.getElementsByClassName('play')[0]

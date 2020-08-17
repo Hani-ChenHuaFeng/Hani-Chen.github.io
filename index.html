@@ -241,7 +241,7 @@
 <style>
 * {margin: 0;padding: 0;}
 html,body {width: 100%;height: 100%;}
-#animation {width: 100%;height: 100%;background: #666;}
+#animation {position: relative;width: 192px;height: 108px;background: #666;margin-bottom: 20px;}
 </style>
 
 <!-- 包含动画的dom元素 -->
@@ -250,7 +250,7 @@ html,body {width: 100%;height: 100%;}
 <button class="play">播放</button>
 <button class="pause">暂停</button>
 <!-- 引入lottie.js -->
-<script src="https://cdn.bootcdn.net/ajax/libs/lottie-web/5.7.0/lottie.js"></script>
+<script src="http://cdn.bootcdn.net/ajax/libs/lottie-web/5.7.0/lottie.js"></script>
 <script>
 var icon = document.getElementById('animation')
 lottie.loadAnimation({
@@ -258,7 +258,7 @@ lottie.loadAnimation({
   renderer: 'html', //渲染方式，有"html"、"canvas"和"svg"三种
   loop: true, //循环播放
   autoplay: true, //自动播放
-  path: 'https://project.perpower.cn/Hani/03.json' // 动画json的路径
+  path: '../json/03.json' // 动画json的路径
 })
 var stop = document.getElementsByClassName('stop')[0]
 var play = document.getElementsByClassName('play')[0]
