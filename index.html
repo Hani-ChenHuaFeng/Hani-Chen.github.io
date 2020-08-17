@@ -194,6 +194,129 @@
             
 
   
+    <article id="post-appletModelCallingMethod" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+  
+  
+    <h1 itemprop="name">
+	
+	  <a class="article-title" href="/2020/08/17/appletModelCallingMethod/" target="_blank">小程序首页其他组件显示首页弹窗</a>
+  
+    </h1>
+  
+
+
+  
+  
+<a href="/2020/08/17/appletModelCallingMethod/" class="archive-article-date">
+        <time datetime="2020-08-17T13:25:10.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-08-17</time>
+</a>
+
+  
+  
+    
+
+  
+  </header>
+  
+  <div class="article-entry" itemprop="articleBody">
+    
+    <h2 id="主要介绍，小程序调用弹窗组件后，需要在首页其他组件操作弹窗显示时，和弹窗自身关闭的逻辑"><a href="#主要介绍，小程序调用弹窗组件后，需要在首页其他组件操作弹窗显示时，和弹窗自身关闭的逻辑" class="headerlink" title="主要介绍，小程序调用弹窗组件后，需要在首页其他组件操作弹窗显示时，和弹窗自身关闭的逻辑"></a>主要介绍，小程序调用弹窗组件后，需要在首页其他组件操作弹窗显示时，和弹窗自身关闭的逻辑</h2><p>我们一起看看首页的部分源代码</p>
+<h4 id="wxml页面的页面结构"><a href="#wxml页面的页面结构" class="headerlink" title="wxml页面的页面结构"></a>wxml页面的页面结构</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"page-home"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 公共组件 - 需要调用弹窗显示隐藏的组件 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">pageModel</span> <span class="attr">bind:showSubscribe</span>=<span class="string">"showSubscribe"</span>&gt;</span><span class="tag">&lt;/<span class="name">pageModel</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 公共组件 - 预约提示弹窗 --&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">popText</span> <span class="attr">popData</span>=<span class="string">"&#123;&#123;popData&#125;&#125;"</span>&gt;</span><span class="tag">&lt;/<span class="name">popText</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解读一下代码 <ul>
+<li>首先 我们需要在调用弹窗显示的组件上绑定一个方法 【showSubscribe】这个方法来自首页的js方法里面</li>
+<li>其次我们要给需要被控制显示隐藏的弹窗传一个显示隐藏的变量</li>
+</ul>
+</li>
+</ul>
+<h4 id="js代码"><a href="#js代码" class="headerlink" title="js代码"></a>js代码</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 控制弹窗显示隐藏的变量 */</span></span><br><span class="line">popData: &#123;</span><br><span class="line">  isShow: <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 触发显示弹窗的方法 - 也是绑定在组件上的方法 */</span></span><br><span class="line">showSubscribe: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">    <span class="string">'popData.isShow'</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面我们看你一下需要调用弹窗显示组件的代码</p>
+<h4 id="首先看看需要调用弹窗显示组件的wxml页面，触发显示弹窗的按钮"><a href="#首先看看需要调用弹窗显示组件的wxml页面，触发显示弹窗的按钮" class="headerlink" title="首先看看需要调用弹窗显示组件的wxml页面，触发显示弹窗的按钮"></a>首先看看需要调用弹窗显示组件的wxml页面，触发显示弹窗的按钮</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 点击显示弹窗 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">bindtap</span>=<span class="string">"showPop"</span>&gt;</span>显示弹窗<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="一起看看js的事件"><a href="#一起看看js的事件" class="headerlink" title="一起看看js的事件"></a>一起看看js的事件</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 组件的方法列表</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">methods: &#123;</span><br><span class="line">  <span class="comment">/* 在按钮上绑定的事件 */</span></span><br><span class="line">  showPop() &#123;</span><br><span class="line">    <span class="comment">// 调用一遍首页传过来的数据</span></span><br><span class="line">    <span class="keyword">this</span>.triggerEvent(<span class="string">'showSubscribe'</span>, <span class="literal">true</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>我们再看看弹窗自身的代码</p>
+<h4 id="首先我们看看通过变量显示弹窗的wxml"><a href="#首先我们看看通过变量显示弹窗的wxml" class="headerlink" title="首先我们看看通过变量显示弹窗的wxml"></a>首先我们看看通过变量显示弹窗的wxml</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 弹窗主体 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"modal"</span> <span class="attr">wx:if</span>=<span class="string">"&#123;&#123;popData.isShow&#125;&#125;"</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 关闭按钮 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"modal-bg modal-close"</span>&gt;</span><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line">  <span class="comment">&lt;!-- 弹窗内容 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">view</span> <span class="attr">class</span>=<span class="string">"modal-content"</span>&gt;</span></span><br><span class="line">    弹窗内容。。。。。。</span><br><span class="line">	<span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>我们再看看弹窗的js代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 组件的属性列表 - 这里放置调用组件时需要传入值得数据</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">properties: &#123;</span><br><span class="line">  <span class="comment">// 控制弹窗显示和隐藏得变量</span></span><br><span class="line">  popData: &#123;</span><br><span class="line">    <span class="comment">// 声明数据类型</span></span><br><span class="line">    type: <span class="built_in">Object</span>,</span><br><span class="line">    <span class="comment">// 变量内容</span></span><br><span class="line">    value: &#123;</span><br><span class="line">      isShow: <span class="literal">true</span>,</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 组件的方法列表</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">methods: &#123;</span><br><span class="line">  <span class="comment">// 关闭弹窗事件 - 直接改变变量值即可</span></span><br><span class="line">  close() &#123;</span><br><span class="line">    <span class="keyword">this</span>.setData(&#123;</span><br><span class="line">      <span class="string">"popData.isShow"</span>: <span class="literal">false</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="以上就是小程序调用弹窗组件后，需要在首页其他组件操作弹窗显示时，和弹窗自身关闭的所有逻辑"><a href="#以上就是小程序调用弹窗组件后，需要在首页其他组件操作弹窗显示时，和弹窗自身关闭的所有逻辑" class="headerlink" title="以上就是小程序调用弹窗组件后，需要在首页其他组件操作弹窗显示时，和弹窗自身关闭的所有逻辑"></a>以上就是小程序调用弹窗组件后，需要在首页其他组件操作弹窗显示时，和弹窗自身关闭的所有逻辑</h2>
+    
+
+    
+
+    
+
+  </div>
+  <div class="article-info article-info-index">
+    
+    
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">web前端</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">web前端 - 小程序</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+    
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/web前端-功能重构//" class="article-tag-list-link color3">web前端 - 功能重构</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+    
+    <p class="article-more-link">
+      <a class="article-more-a" href="/2020/08/17/appletModelCallingMethod/">展开全文 >></a>
+    </p>
+    
+
+    
+    <div class="clearfix"></div>
+  </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-day3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1212,11 +1335,15 @@ border-radius: .5em;
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">web前端 - vue</a>
+                <a href="javascript:void(0)" class="js-tag color2">web前端 - 小程序</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">web前端 - js</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">web前端 - vue</a>
               </li>
             
             <div class="clearfix"></div>
